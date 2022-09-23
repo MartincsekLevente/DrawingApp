@@ -2,9 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>DrawingApp</title>
+    <script src="jquery-3.6.1.min.js"></script>
+    <script src="scripts.js"></script>
+    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
+    <div class ="toolbar">
+           <h1>Brush Size</h1>
+            <div id="sizeSlider">
+                <label>
+                    <input type="range" min="1" max ="10" value="5" id="slider" class="slider">
+                </label>
+                <div id="brush_size">
+
+                Size:
+                    <div id="sizeValue">5</div>
+                </div>
+    </div>
+           <h1>Brush Color</h1>
+            <div id="colorPicker">
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <input type="button" id="color1" class="colorPickerButton">
+                    </div>
+                    <div class="grid-item">
+                        <input type="button" id="color2" class="colorPickerButton">
+                    </div>
+                    <div class="grid-item">
+                        <input type="button" id="color3" class="colorPickerButton">
+                    </div>
+                    <div class="grid-item">
+                        <input type="button" id="color4" class="colorPickerButton">
+                    </div>
+                    <div class="grid-item">
+                        <input type="button" id="color5" class="colorPickerButton">
+                    </div>
+                    <div class="grid-item">
+                        <input type="button" id="color6" class="colorPickerButton">
+                    </div>
+                    <div class="grid-item">
+                        <input type="button" id="color7" class="colorPickerButton">
+                    </div>
+                    <div class="grid-item">
+                        <input type="button" id="color8" class="colorPickerButton">
+                    </div>
+                    <div class="grid-item">
+                        <input type="button" id="color9" class="colorPickerButton">
+                    </div>
+                </div>
+            <div id="currentColor">
+                Current Color:
+                <div>
+                    <input type="button" class="colorPickerButton" id="currentColorButton">
+                </div>
+            </div>
+            </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+
+
 
 </body>
 </html>
