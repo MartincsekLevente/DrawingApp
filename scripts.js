@@ -4,15 +4,18 @@ const horizontal_canvas_size_corrector = 20;
 const vertical_canvas_size_corrector = 310;
 const x_corrector = 298;
 const y_corrector = 10;
+const backgroundColor = "#f5f5f5";
 
 let brushSlider;
-let brushSliderValue = 5;
+let brushSliderValue = 10;
 let brushSliderValueDisplay;
 let brushColor = "black";
 let currentColor;
 
 let inCanvas = false;
 let isPainting = false;
+
+let isErasing = false;
 
 let colorButton1;
 let colorButton2;
@@ -44,6 +47,7 @@ window.addEventListener("load", () => {
     canvasSizeSetter();
     drawingListeners();
     brushSettings();
+    eraserCheck();
 
 });
 
@@ -52,47 +56,64 @@ window.addEventListener("resize", () => {
     canvasSizeSetter();
 });
 
-function brushSettings(){
+function eraserCheck() {
+    addEventListener('keydown', (eraserKeyDown));
+    addEventListener('keyup', (eraserKeyUp));
+
+    function eraserKeyDown(e) {
+        if (e.code === 'KeyE') {
+            isErasing = true;
+        }
+    }
+
+    function eraserKeyUp(e) {
+        if (e.code === 'KeyE') {
+            isErasing = false;
+        }
+    }
+}
+
+function brushSettings() {
     brushSlider.oninput = function changingSlider() {
         brushSliderValue = this.value;
         brushSliderValueDisplay.innerText = this.value;
     }
 
-    colorButton1.onclick = function asd(){
+    colorButton1.onclick = function asd() {
         brushColor = "black";
-        currentColor.style.backgroundColor="black";
+        currentColor.style.backgroundColor = "black";
     }
-    colorButton2.onclick = function asd(){
+    colorButton2.onclick = function asd() {
         brushColor = "red";
-        currentColor.style.backgroundColor="red";
+        currentColor.style.backgroundColor = "red";
     }
-    colorButton3.onclick = function asd(){
+    colorButton3.onclick = function asd() {
         brushColor = "green";
-        currentColor.style.backgroundColor="green";
+        currentColor.style.backgroundColor = "green";
     }
-    colorButton4.onclick = function asd(){
+    colorButton4.onclick = function asd() {
         brushColor = "blue";
-        currentColor.style.backgroundColor="blue";
+        currentColor.style.backgroundColor = "blue";
     }
-    colorButton5.onclick = function asd(){
+    colorButton5.onclick = function asd() {
         brushColor = "orange";
-        currentColor.style.backgroundColor="orange";
+        currentColor.style.backgroundColor = "orange";
     }
-    colorButton6.onclick = function asd(){
+    colorButton6.onclick = function asd() {
         brushColor = "yellow";
-        currentColor.style.backgroundColor="yellow";
+        currentColor.style.backgroundColor = "yellow";
     }
-    colorButton7.onclick = function asd(){
+    colorButton7.onclick = function asd() {
         brushColor = "pink";
-        currentColor.style.backgroundColor="pink";
+        currentColor.style.backgroundColor = "pink";
     }
-    colorButton8.onclick = function asd(){
+    colorButton8.onclick = function asd() {
         brushColor = "purple";
-        currentColor.style.backgroundColor="purple";
+        currentColor.style.backgroundColor = "purple";
     }
-    colorButton9.onclick = function asd(){
+    colorButton9.onclick = function asd() {
         brushColor = "white";
-        currentColor.style.backgroundColor="white";
+        currentColor.style.backgroundColor = "white";
     }
 
 
@@ -101,14 +122,15 @@ function brushSettings(){
 function canvasSizeSetter() {
     canvas.height = window.innerHeight - horizontal_canvas_size_corrector;
     canvas.width = window.innerWidth - vertical_canvas_size_corrector;
+    canvas.style.backgroundColor = backgroundColor;
 }
 
 function drawingListeners() {
     canvas.addEventListener("mousedown", startPosition);
     canvas.addEventListener("mouseup", endPosition);
     canvas.addEventListener("mousemove", draw);
-    canvas.addEventListener("mouseleave",mouseLeave);
-    canvas.addEventListener("mouseenter",mouseEnter);
+    canvas.addEventListener("mouseleave", mouseLeave);
+    canvas.addEventListener("mouseenter", mouseEnter);
 }
 
 function mouseEnter() {
@@ -120,6 +142,7 @@ function mouseLeave() {
     inCanvas = false;
     isPainting = false;
 }
+
 function startPosition(e) {
     isPainting = true;
     ctx.beginPath();
@@ -133,17 +156,21 @@ function endPosition() {
 
 function draw(e) {
     if (isPainting) {
-        ctx.strokeStyle = brushColor;
+        if(isErasing){
+            ctx.strokeStyle =backgroundColor;
+        }else{
+            ctx.strokeStyle = brushColor;
+        }
         ctx.lineWidth = brushSliderValue;
         ctx.lineCap = "round";
-        ctx.lineTo(e.clientX-x_corrector, e.clientY-y_corrector);
+        ctx.lineTo(e.clientX - x_corrector, e.clientY - y_corrector);
         ctx.stroke();
 
         //for line smoothing
         ctx.beginPath();
-        ctx.moveTo(e.clientX-x_corrector, e.clientY-y_corrector);
+        ctx.moveTo(e.clientX - x_corrector, e.clientY - y_corrector);
     } else {
-        ctx.moveTo(e.clientX-x_corrector, e.clientY-y_corrector);
+        ctx.moveTo(e.clientX - x_corrector, e.clientY - y_corrector);
     }
 
 }
